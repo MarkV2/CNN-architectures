@@ -1,5 +1,3 @@
-import tensorflow as tf
-
 def conv2D(filter_num, kernel_size, strides = (1, 1), padding='valid', use_activation = True):
     def block(x):
         x = tf.keras.layers.Conv2D(filter_num, kernel_size, strides=strides, padding=padding)(x)
@@ -41,6 +39,7 @@ def ResNetV2(input_shape, output_dims, number_of_identity_blocks):
 
     x = tf.keras.layers.ZeroPadding2D((3, 3))(inp)
     x = conv2D(64, (7, 7), strides=(2, 2))(x)
+    x = tf.keras.layers.ZeroPadding2D((1, 1))(x)
     x = tf.keras.layers.MaxPooling2D((3, 3), strides=(2, 2))(x)
 
     x = convolutional_block([64, 64, 256], (3, 3), strides=(1, 1))(x)
@@ -59,7 +58,7 @@ def ResNetV2(input_shape, output_dims, number_of_identity_blocks):
     for i in range(number_of_identity_blocks[3]):
         x = identity_block([512, 512, 2048], (3, 3))(x)
 
-    x = tf.keras.layers.AveragePooling2D((2, 2))(x)
+    x = tf.keras.layers.GlobalAveragePooling2D()(x)
     x = tf.keras.layers.Flatten()(x)
     x = tf.keras.layers.Dense(output_dims)(x)
 
