@@ -1,2 +1,2 @@
-def ResNet152(input_shape, output_dims):
-    return ResNetXtV2(input_shape, output_dims, [2, 7, 35, 2])
+def ResNext152(input_shape, output_dims):
+    return ResNextV2(input_shape, output_dims, [2, 7, 35, 2])
