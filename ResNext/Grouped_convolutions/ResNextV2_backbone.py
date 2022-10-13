@@ -34,11 +34,11 @@ def convolutional_block(filters, kernel_size, strides = (2, 2)):
     return block
 
 
-def ResNetXtV2(input_shape, output_dims, number_of_identity_blocks):
+def ResNextV2(input_shape, output_dims, number_of_identity_blocks):
     inp = tf.keras.Input(shape = input_shape)
 
     x = tf.keras.layers.ZeroPadding2D((3, 3))(inp)
-    x = conv2D(64, (7, 7), strides=(2, 2))(x)
+    x = conv2D(64, (7, 7), strides=(2, 2), cardinality = 1)(x)
     x = tf.keras.layers.ZeroPadding2D((1, 1))(x)
     x = tf.keras.layers.MaxPooling2D((3, 3), strides=(2, 2))(x)
 
